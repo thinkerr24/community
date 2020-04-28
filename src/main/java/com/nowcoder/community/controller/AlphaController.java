@@ -17,3 +17,9 @@ public class AlphaController {
         return "<h1>Hello, Spring Boot!</h1>";
     }
 }
+
+/*  Note:
+ *  1. Scan scope: Main-method-class(Configuration class: CommunityApplication) same level or its sub-package.
+ *  2. @Controller @Service @Repository are both based on @Component, choosing one according to the situation.
+ *  3.
+ */
