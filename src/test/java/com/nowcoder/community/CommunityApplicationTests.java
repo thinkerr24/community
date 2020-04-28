@@ -3,6 +3,7 @@ package com.nowcoder.community;
 import com.nowcoder.community.controller.AlphaController;
 import com.nowcoder.community.dao.AlphaDao;
 import com.nowcoder.community.dao.AlphaDaoHibernateImpl;
+import com.nowcoder.community.service.AlphaService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,16 @@ class CommunityApplicationTests implements ApplicationContextAware {
 		// AlphaDao alphaDao2 = (AlphaDaoHibernateImpl)applicationContext.getBean("alphaHibernate"); or
 		AlphaDao alphaDao2 = applicationContext.getBean("alphaHibernate", AlphaDao.class);
 		System.out.println(alphaDao2.select());
+	}
+
+	// Check container related methods called
+	@Test
+	public void testBeanManagement() {
+		// Default singleton
+		AlphaService alphaService = applicationContext.getBean(AlphaService.class);
+		System.out.println(alphaService);
+
+		AlphaService alphaService2 = applicationContext.getBean(AlphaService.class);
+		System.out.println(alphaService == alphaService2);  // when scope is prototype, it is false
 	}
 }
