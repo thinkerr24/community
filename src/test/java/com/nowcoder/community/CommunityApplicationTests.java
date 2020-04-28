@@ -72,6 +72,7 @@ class CommunityApplicationTests implements ApplicationContextAware {
 
 	@Autowired
 	public SimpleDateFormat simpleDateFormat;
+	
 	@Test
 	public void testDI() {
 		System.out.println(dao.select());
