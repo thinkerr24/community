@@ -3,8 +3,7 @@ package com.nowcoder.community.controller;
 import com.nowcoder.community.service.AlphaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,6 +57,25 @@ public class AlphaController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Get request (@GetMapping = @RequestMapping(method = RequestMethod.GET))
+    // Passing parameters case 1:  students?current=1&limit=20
+    @GetMapping(path = "/students")
+    @ResponseBody
+    public String getStudents(@RequestParam(name="current", required = false, defaultValue = "1") int current,
+      @RequestParam(name = "limit", required = false, defaultValue = "10") int limit) {
+        System.out.println(current);
+        System.out.println(limit);
+        return "Some students";
+    }
+
+    // Passing parameters case 2: /student/123
+    @GetMapping("/student/{id}")
+    @ResponseBody
+    public String getStudent(@PathVariable("id") int id) {
+        System.out.println(id);
+        return "a student";
     }
 }
 
