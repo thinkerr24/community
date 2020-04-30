@@ -3,13 +3,15 @@ package com.nowcoder.community.controller;
 import com.nowcoder.community.service.AlphaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
+import java.util.*;
 
 /**
  *  Simple Contoller functional test
@@ -76,6 +78,71 @@ public class AlphaController {
     public String getStudent(@PathVariable("id") int id) {
         System.out.println(id);
         return "a student";
+    }
+
+    // Post request
+    @PostMapping("/student")
+    @ResponseBody
+    // parameter name same as front-end html(resources/static/html/student.html) form name-attribute name
+    public String saveStudent(String name, int age) {
+        System.out.println("name:" + name + ", age:" + age);
+        return "success";
+    }
+
+    // Response html data
+    @GetMapping("/teacher")
+    public ModelAndView getTeacher() {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("name", "ZhangSan");
+        mav.addObject("age", 30);
+        // Set viewPath:  In /resource/templates/, it is demo/view.html
+        mav.setViewName("/demo/view");
+        return mav;
+    }
+
+    // Similar to the example above: return viewPath & model obj set value.
+    @GetMapping("/school")
+    public String getSchool(Model model) {
+        model.addAttribute("name", "JLD");
+        model.addAttribute("age", 5);
+        return "/demo/view";
+    }
+
+    // Response Json
+    // Java Obj(back-end) -> JSON -> Js Obj(front-end)
+    @GetMapping("/emp")
+    @ResponseBody
+    public Map<String, Object> getEmp() {
+        Map<String, Object> emp = new HashMap<>();
+        emp.put("name", "Lisi");
+        emp.put("age", 23);
+        emp.put("salary", 5000);
+        return emp;
+    }
+
+    @GetMapping("/emps")
+    @ResponseBody
+    public List<Map<String, Object>> getEmps() {
+        List<Map<String, Object>> emps = new ArrayList<>();
+
+        Map<String, Object> emp = new HashMap<>();
+        emp.put("name", "Lisi");
+        emp.put("age", 23);
+        emp.put("salary", 5000);
+        emps.add(emp);
+
+        emp = new HashMap<>();
+        emp.put("name", "WangWu");
+        emp.put("age", 24);
+        emp.put("salary", 6000);
+        emps.add(emp);
+
+        emp = new HashMap<>();
+        emp.put("name", "UFO");
+        emp.put("age", "??");
+        emps.add(emp);
+        
+        return emps;
     }
 }
 
