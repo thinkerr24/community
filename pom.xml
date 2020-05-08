@@ -45,6 +45,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- Dao layer -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.31</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
