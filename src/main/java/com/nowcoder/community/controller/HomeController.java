@@ -29,12 +29,12 @@ public class HomeController {
             for (DiscussPost post: list) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("post", post);
-                User user = userService.findUserById(post.getId());
+                User user = userService.findUserById(post.getUserId());
                 map.put("user", user);
                 discussPosts.add(map);
             }
         }
         model.addAttribute("discussPosts", discussPosts);
-        return "/index";
+        return "index";
     }
 }
