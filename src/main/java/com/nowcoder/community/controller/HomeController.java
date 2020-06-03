@@ -1,6 +1,7 @@
 package com.nowcoder.community.controller;
 
 import com.nowcoder.community.entity.DiscussPost;
+import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.service.DiscussPostService;
 import com.nowcoder.community.service.UserService;
@@ -22,8 +23,13 @@ public class HomeController {
     private UserService userService;
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
-    public String getIndexPage(Model model) {
-        List<DiscussPost> list = discussPostService.findDiscussPosts(0, 0, 10);
+    public String getIndexPage(Model model, Page page) {
+        // SpringMVC will instance model&page and inject page to model Before the method invokes, so it doesn't need to addAttribute page
+        // and it can access page object in thymeleaf
+        page.setRows(discussPostService.findDiscussPostRows(0));
+        page.setPath("/index");
+
+        List<DiscussPost> list = discussPostService.findDiscussPosts(0, page.getOffset(), page.getLimit());
         List<Map<String, Object>> discussPosts = new ArrayList<>();
         if (list != null) {
             for (DiscussPost post: list) {
@@ -35,6 +41,7 @@ public class HomeController {
             }
         }
         model.addAttribute("discussPosts", discussPosts);
-        return "index";
+        // Add or not Add "/" seems no impact?
+        return "/index";
     }
 }
