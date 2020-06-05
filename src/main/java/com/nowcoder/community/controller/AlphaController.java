@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -170,10 +171,37 @@ public class AlphaController {
         System.out.println(code);
         return "get cookie";
     }
+
+    // Session example
+    @GetMapping("/session/set")
+    @ResponseBody
+    public String setSession(HttpSession session) {
+        session.setAttribute("id", 1);
+        session.setAttribute("name", "Alpha");
+        return "set session";
+    }
+
+    @GetMapping("/session/get")
+    @ResponseBody
+    public String getSession(HttpSession session) {
+        System.out.println("session.id:" + session.getAttribute("id"));
+        System.out.println("session.name:" + session.getAttribute("name"));
+        return "get session";
+    }
 }
 
 /*  Note:
  *  1. Scan scope: Main-method-class(Configuration class: CommunityApplication) same level or its sub-package.
  *  2. @Controller @Service @Repository are both based on @Component, choosing one according to the situation.
  *  3.
+ */
+/*
+    笔记:
+    Session适合单体server, 如果要做分布式(eg. nginx做load balance)就会有问题:session不共享
+    解决方案:
+           1.粘性session, 设置和访问都是同一台server[有些不符合负载均衡]
+           2.同步session, 每台server对session同步[降低了server性能，有一定苦难]
+           3.专用session, 弄一台专门的server存session，其它业务server从这台server里读[这台server一旦挂了其它业务server都不能访问]
+     成熟方案:
+        session存数据库(集群和同步比较容易): 传统关系型DB(硬盘IO慢) -> NoSQL(redis)
  */
