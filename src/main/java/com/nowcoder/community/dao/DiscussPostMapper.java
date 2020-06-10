@@ -15,4 +15,5 @@ public interface DiscussPostMapper {
     //         If the function has only one parameter and it is used in <if> in mapper, it should be added.
     int selectDiscussPostRows(@Param("userId") int userId);
 
+    int insertDiscussPost(DiscussPost discussPost);
 }
