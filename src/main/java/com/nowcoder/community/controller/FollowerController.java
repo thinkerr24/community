@@ -1,7 +1,7 @@
 package com.nowcoder.community.controller;
 
 import com.nowcoder.community.entity.User;
-import com.nowcoder.community.service.FollowerService;
+import com.nowcoder.community.service.FollowService;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FollowerController {
 
     @Autowired
-    private FollowerService followerService;
+    private FollowService followService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -24,7 +24,7 @@ public class FollowerController {
     public String follow(int entityType, int entityId) {
         User user = hostHolder.getUser();
 
-        followerService.follow(user.getId(), entityType, entityId);
+        followService.follow(user.getId(), entityType, entityId);
 
         return CommunityUtil.getJSONString(0, "已关注");
     }
@@ -35,7 +35,7 @@ public class FollowerController {
     public String unFollow(int entityType, int entityId) {
         User user = hostHolder.getUser();
 
-        followerService.unFollow(user.getId(), entityType, entityId);
+        followService.unFollow(user.getId(), entityType, entityId);
 
         return CommunityUtil.getJSONString(0, "已取消关注");
     }
