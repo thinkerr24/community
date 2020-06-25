@@ -190,8 +190,6 @@ public class MessageController implements CommunityConstant {
         message = messageService.findLatestNotice(user.getId(), TOPIC_FOLLOW);
         messageVO = new HashMap<>();
         if (message != null) {
-            messageVO.put("message", message);
-
             String content = HtmlUtils.htmlUnescape(message.getContent());
             Map<String, Object> data = JSONObject.parseObject(content, HashMap.class);
 
@@ -205,6 +203,7 @@ public class MessageController implements CommunityConstant {
             int unread = messageService.findNoticeUnreadCount(user.getId(), TOPIC_FOLLOW);
             messageVO.put("unread", unread);
         }
+        messageVO.put("message", message);
         model.addAttribute("followNotice", messageVO);
 
         // 查询未读消息数量
